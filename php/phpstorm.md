@@ -1,0 +1,5 @@
+[xdebug配置](https://blog.csdn.net/qq_39655200/article/details/80858438)  
+[断点调试栏说明](https://blog.csdn.net/qq_39655200/article/details/80858438)  
+[连接mysql数据库配置](https://blog.csdn.net/qq_33862644/article/details/81384511)  
+[git配置](https://blog.csdn.net/fationyyk/article/details/79071204)  
+[svn配置](https://blog.csdn.net/wangjingna/article/details/49788875)  

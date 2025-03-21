@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui/lib/theme-chalk/index.css">
+    <title>时间转换</title>
+    <link rel="icon" href="/snail.png" />
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+<body>
+<div id="app">
+    <!--<el-form :model="form" label-width="80px">
+        <el-form-item label="当前时间" prop="datetime">
+            <el-col :span="5">
+                <el-input v-model="form.datetime"></el-input>
+            </el-col>
+        </el-form-item>
+    </el-form>-->
+    <el-form :model="timestampForm" :rules="rules" ref="timestampForm" label-width="80px">
+        <el-form-item label="时间戳">
+            <el-col :span="5">
+                <el-form-item prop="timestampSource">
+                    <el-input v-model="timestampForm.timestampSource"
+                              :placeholder="timestampForm.timestampDemo"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="2" style="text-align:center;">
+                <el-button type="primary" @click="processTimestamp('timestampForm')">转换</el-button>
+            </el-col>
+            <el-col :span="5">
+                <el-form-item>
+                    <el-input v-model="timestampForm.timestampTarget"></el-input>
+                </el-form-item>
+            </el-col>
+        </el-form-item>
+    </el-form>
+    <el-form :model="datetimeForm" :rules="rules" ref="datetimeForm" label-width="80px">
+        <el-form-item label="日期时间">
+            <el-col :span="5">
+                <el-form-item prop="datetimeSource">
+                    <el-input v-model="datetimeForm.datetimeSource" :placeholder="datetimeForm.datetimeDemo"></el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="2" style="text-align:center;">
+                <el-button type="primary" @click="processDatetime('datetimeForm')">转换</el-button>
+            </el-col>
+            <el-col :span="5">
+                <el-input v-model="datetimeForm.datetimeTarget"></el-input>
+            </el-col>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+    var app = new Vue(
+        {
+            el: '#app',
+            data() {
+                var checkTimestamp = (rule, value, callback) => {
+                    if (!/^[1-9]\d{9}$/.test(value)) {
+                        callback(new Error('请输入10位数字'));
+                    } else {
+                        callback();
+                    }
+                };
+
+                var checkDatetime = (rule, value, callback) => {
+                    if (!/^[1-9]\d{3}-(0[1-9]|10|11|12)-(0[1-9]|2\d|30|31) ([0-1]\d|2[0-3]):[0-5]\d:[0-5]\d$/.test(value)) {
+                        callback(new Error('日期时间格式不正确'));
+                    } else {
+                        let arr = value.split('-');
+                        let y = arr[0];
+                        let m = arr[1];
+                        let d = arr[2];
+                        if (d == 31 && (m == 4 || m == 6 || m == 9 || m == 11) || m == 2 && (y % 400 != 0 && d >= 29 || y % 400 == 0 && d > 29)) {
+                            callback(new Error('日期时间格式不正确'));
+                        } else {
+                            callback();
+                        }
+                    }
+                };
+
+                return {
+                    // form: {
+                    //     timestamp: '',
+                    //     datetime: this.getYmdHis(),
+                    // },
+                    timestampForm: {
+                        timestampSource: '',
+                        timestampTarget: '',
+                        timestampDemo: Math.floor((new Date()).getTime() / 1000)
+                    },
+                    datetimeForm: {
+                        datetimeSource: '',
+                        datetimeTarget: '',
+                        datetimeDemo: this.getYmdHis()
+                    },
+                    rules: {
+                        timestampSource: [
+                            {validator: checkTimestamp, trigger: 'blur'}
+                        ],
+                        datetimeSource: [
+                            {validator: checkDatetime, trigger: 'blur'}
+                        ],
+                    }
+                };
+            },
+            mounted: function () {
+                // var _this = this;
+                // this.timer = setInterval(function () {
+                //     _this.form.datetime = _this.getYmdHis();
+                // }, 1000);
+            },
+            methods: {
+                getYmdHis(timestamp) {
+                    let t;
+                    if (typeof timestamp == "undefined" || timestamp <= 0) {
+                        t = new Date();
+                    } else {
+                        t = new Date(parseInt(timestamp) * 1000);
+                    }
+
+                    let y = t.getFullYear();
+                    let M = t.getMonth() + 1;
+                    let d = t.getDate();
+                    let h = t.getHours();
+                    let m = t.getMinutes();
+                    let s = t.getSeconds();
+
+                    if (M < 10) {
+                        M = '0' + M;
+                    }
+
+                    if (d < 10) {
+                        d = '0' + d;
+                    }
+
+                    if (h < 10) {
+                        h = '0' + h;
+                    }
+
+                    if (m < 10) {
+                        m = '0' + m;
+                    }
+
+                    if (s < 10) {
+                        s = '0' + s;
+                    }
+
+                    return y + '-' + M + '-' + d + ' ' + h + ':' + m + ':' + s;
+                },
+                getDatetime(datetime) {
+                    if (typeof datetime == "undefined" || !datetime) {
+                        return '';
+                    }
+
+                    return Math.floor((new Date(datetime)).getTime() / 1000);
+                },
+                processTimestamp(form) {
+                    this.$refs[form].validate((valid) => {
+                        if (valid) {
+                            this.timestampForm.timestampTarget = this.getYmdHis(this.timestampForm.timestampSource);
+                        }
+                    });
+                },
+                processDatetime(form) {
+                    this.$refs[form].validate((valid) => {
+                        if (valid) {
+                            this.datetimeForm.datetimeTarget = this.getDatetime(this.datetimeForm.datetimeSource);
+                        }
+                    });
+                }
+            }
+        }
+    )
+</script>
+</body>
+</html>
+

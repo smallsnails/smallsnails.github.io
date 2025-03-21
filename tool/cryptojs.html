@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui/lib/theme-chalk/index.css">
+    <title>加解密</title>
+    <link rel="icon" href="/snail.png" />
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+<body>
+<div id="app">
+    <el-form :model="form" :ref="form">
+        <el-form-item>
+            <el-col :span="9">
+                <el-form-item prop="inputValue">
+                    <el-input
+                            type="textarea"
+                            :autosize="{ minRows: 20, maxRows: 40}"
+                            placeholder="请输入内容"
+                            v-model="form.inputValue">
+                    </el-input>
+                </el-form-item>
+            </el-col>
+            <el-col :span="6" style="text-align:center;vertical-align: middle;">
+                <el-form-item prop="type">
+                    <el-radio-group v-model="form.type">
+                        <el-col>
+                            <el-radio label="toLower" name="type"></el-radio>
+                            <el-radio label="toUpper" name="type"></el-radio>
+                        </el-col>
+                        <el-col>
+                            <el-radio label="json_encode" name="type"></el-radio>
+                            <el-radio label="json_decode" name="type"></el-radio>
+                        </el-col>
+                        <el-col>
+                            <el-radio label="md5" name="type"></el-radio>
+                            <el-radio label="sha1" name="type"></el-radio>
+                        </el-col>
+                        <el-col>
+                            <el-radio label="base64_encode" name="type"></el-radio>
+                            <el-radio label="base64_decode" name="type"></el-radio>
+                        </el-col>
+                    </el-radio-group>
+                </el-form-item>
+                <el-form-item>
+                    <el-button type="primary" @click="process('form')">转换</el-button>
+                </el-form-item>
+            </el-col>
+            <el-col :span="9">
+                <el-form-item prop="outputValue">
+                    <el-input
+                            type="textarea"
+                            :autosize="{ minRows: 20, maxRows: 40}"
+                            placeholder="显示结果"
+                            v-model="form.outputValue">
+                    </el-input>
+                </el-form-item>
+            </el-col>
+        </el-form-item>
+    </el-form>
+</div>
+<script>
+    // https://www.sojson.com/encrypt.html
+    // https://element.eleme.io/#/zh-CN/component/form
+    // https://developers.weixin.qq.com/community/develop/article/doc/000aa6080f0df89004a8e690251013
+    var app = new Vue({
+        el: '#app',
+        data() {
+            return {
+                form: {
+                    type: 'toLower',
+                    inputValue: '',
+                    outputValue: ''
+                }
+            }
+        },
+        methods: {
+            process(form) {
+                let type = this.form.type;
+                let input = this.form.inputValue;
+                let output = '';
+                if (!input) {
+                    this.form.outputValue = output;
+                    return;
+                }
+
+                try {
+                    if (type == 'toLower') {
+                        output = input.toLowerCase();
+                    } else if (type == 'toUpper') {
+                        output = input.toUpperCase();
+                    } else if (type == 'json_encode') {
+                        output = JSON.stringify(input);
+                    } else if (type == 'json_decode') {
+                        output = JSON.parse(input);
+                    } else if (type == 'md5') {
+                        output = CryptoJS.MD5(input).toString();
+                    } else if (type == 'sha1') {
+                        output = CryptoJS.SHA1(input).toString();
+                    } else if (type == 'base64_encode') {
+                        input = CryptoJS.enc.Utf8.parse(input);
+                        output = CryptoJS.enc.Base64.stringify(input);
+                    } else if (type == 'base64_decode') {
+                        input = CryptoJS.enc.Base64.parse(input);
+                        output = CryptoJS.enc.Utf8.stringify(input);
+                    }
+                } catch (e) {
+                    alert(e);
+                    return;
+                }
+
+                this.form.outputValue = output;
+            }
+        }
+    });
+</script>
+</body>
+</html>
+

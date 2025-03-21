@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>snail</title>
+    <link rel="icon" href="/snail.png" />
+    <meta name="google-site-verification" content="6t0LoIeFksrjF4c9sqUEsVXiQNxLp2hgoqo0KryT-sE"/>
+    <meta name="keywords" content="doc,docs,documentation,gitbook,creator,generator,github,jekyll,github-pages"/>
+    <meta name="description" content="A magical documentation generator." />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0"/>
+    <!--
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css" title="vue"/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css" title="dark" disabled/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/buble.css" title="buble" disabled/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/pure.css" title="pure" disabled/>
+    <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dolphin.css" title="dolphin" disable/>
+
+    <link href="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/themes/vue.min.css" rel="stylesheet" title="vue">
+    <link href="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/themes/dark.min.css" rel="stylesheet" title="dark" disabled>
+    <link href="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/themes/buble.min.css" rel="stylesheet" title="buble" disabled>
+    <link href="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/themes/pure.min.css" rel="stylesheet" title="pure" disabled>
+    <link href="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/themes/dolphin.min.css" rel="stylesheet" title="dolphin" disabled>
+   -->
+
+    <link href="/assets/themes/4.13.1/vue.min.css" rel="stylesheet" title="vue">
+    <link href="/assets/themes/4.13.1/dark.min.css" rel="stylesheet" title="dark" disabled>
+    <link href="/assets/themes/4.13.1/buble.min.css" rel="stylesheet" title="buble" disabled>
+    <link href="/assets/themes/4.13.1/pure.min.css" rel="stylesheet" title="pure" disabled>
+    <link href="/assets/themes/4.13.1/dolphin.min.css" rel="stylesheet" title="dolphin" disabled>
+
+    <style>
+      nav.app-nav li ul {
+        min-width: 100px;
+      }
+<!--
+      #carbonads {
+        box-shadow: none !important;
+        width: auto !important;
+      }
+-->
+    </style>
+  </head>
+
+  <body>
+    <div id="app">Loading ...</div>
+    <!-- <script src="//cdn.jsdelivr.net/npm/docsify-plugin-carbon@1"></script> -->
+    <script>
+      // Docsify configuration
+      window.$docsify = {
+        auto2top: true,
+        coverpage: false,
+        executeScript: true,
+        homepage: 'sidebar.md',
+        sidebar: 'sidebar.md',
+        loadSidebar: true,
+        //loadNavbar: false,
+        //mergeNavbar: true,
+        maxLevel: 4,
+        subMaxLevel: 2,
+        ga: 'UA-106147152-1',
+        matomo: {
+          host: '//matomo.thunderwave.de',
+          id: 6,
+        },
+        name: 'snail', // 'docsify',
+        nameLink: {
+          '/': '#/',
+        },
+        search: {
+          noData: {
+            '/': '没有结果!',
+          },
+          paths: 'auto',
+          placeholder: {
+            '/': '搜索',
+          },
+        },
+        vueComponents: {
+          'button-counter': {
+            template: /* html */ `<button @click="count += 1">You clicked me {{ count }} times</button>`,
+            data() {
+              return {
+                count: 0,
+              };
+            },
+          },
+        },
+        vueGlobalOptions: {
+          data() {
+            return {
+              count: 0,
+              message: 'Hello, World!',
+              // Fake API response
+              images: [
+                { title: 'Image 1', url: 'https://picsum.photos/150?random=1' },
+                { title: 'Image 2', url: 'https://picsum.photos/150?random=2' },
+                { title: 'Image 3', url: 'https://picsum.photos/150?random=3' },
+              ],
+            };
+          },
+          computed: {
+            timeOfDay() {
+              const date = new Date();
+              const hours = date.getHours();
+
+              if (hours < 12) {
+                return 'morning';
+              } else if (hours < 18) {
+                return 'afternoon';
+              } else {
+                return 'evening';
+              }
+            },
+          },
+          methods: {
+            hello() {
+              alert(this.message);
+            },
+          },
+        },
+        vueMounts: {
+          '#counter': {
+            data() {
+              return {
+                count: 0,
+              };
+            },
+          },
+        },
+        plugins: [
+          //DocsifyCarbon.create('CEBI6KQE', 'docsifyjsorg'),
+          function (hook, vm) {
+            hook.beforeEach(html => {
+              return (
+                html +
+                '\n\n----\n\n' +
+                '<p style="text-align:center;">冬夜读书示子聿 --- 宋·陆游</p>' +
+                '<p style="text-align:center;">古人学问无遗力，少壮工夫老始成。</p>' +
+                '<p style="text-align:center;">纸上得来终觉浅，绝知此事要躬行。</p>' +
+		'<img src="/japan.webp">'
+              );
+            });
+          },
+        ],
+      };
+    </script>
+    <!--
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-nginx.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-go.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-python.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/docsify-copy-code/2.1.1/docsify-copy-code.min.js"></script>
+
+    <script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/docsify.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/docsify/4.13.1/plugins/search.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prism/9000.0.1/components/prism-bash.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prism/9000.0.1/components/prism-markdown.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-nginx.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prism/9000.0.1/components/prism-php.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prism/9000.0.1/components/prism-go.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prism/9000.0.1/components/prism-python.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/prism/9000.0.1/components/prism-yaml.min.js"></script>
+    <script src="https://cdn.bootcdn.net/ajax/libs/docsify-copy-code/3.0.0/docsify-copy-code.min.js"></script>
+    -->
+
+    <script src="/assets/docsify/4.13.1/docsify.min.js"></script>
+    <script src="/assets/docsify/4.13.1/search.min.js"></script>
+    <script src="/assets/prism/9000.0.1/prism-bash.min.js"></script>
+    <script src="/assets/prism/9000.0.1/prism-markdown.min.js"></script>
+    <!--<script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-nginx.min.js"></script>-->
+    <script src="/assets/prism/9000.0.1/prism-php.min.js"></script>
+    <script src="/assets/prism/9000.0.1/prism-go.min.js"></script>
+    <script src="/assets/prism/9000.0.1/prism-python.min.js"></script>
+    <script src="/assets/prism/9000.0.1/prism-yaml.min.js"></script>
+    <script src="/assets/docsify/3.0.0/docsify-copy-code.min.js"></script>
+
+    <script>
+      // Public site only
+      if (/docsify/.test(location.host)) {
+        document.write(
+          '<script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/ga.min.js"><\/script>'
+        );
+        document.write(
+          '<script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/matomo.min.js"><\/script>'
+        );
+      }
+    </script>
+    <script src="/assets/vue/2.7.9/vue.min.js"></script>
+    <!--<script src="https://cdn.bootcdn.net/ajax/libs/vue/2.7.9/vue.min.js"></script>-->
+    <!--<script src="//cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>-->
+    <!-- <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
+  </body>
+</html>

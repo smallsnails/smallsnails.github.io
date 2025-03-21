@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/element-ui/lib/theme-chalk/index.css">
+    <title>IP转换</title>
+    <link rel="icon" href="/snail.png" />
+</head>
+<script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/element-ui/lib/index.js"></script>
+<body>
+<div id="app">
+    <el-row type="flex">
+        <el-col :span="10">
+            <el-form :model="form" ref="form" label-width="100px">
+                <el-form-item prop="source" label="输入IP或INT">
+                    <el-input v-model="form.source"></el-input>
+                </el-form-item>
+                <el-form-item>
+                    <el-row type="flex">
+                        <el-col>
+                            <el-button type="primary" @click="processInt('form')">IP转INT</el-button>
+                        </el-col>
+                        <el-col>
+                            <el-button type="primary" @click="processIp('form')">INT转IP</el-button>
+                        </el-col>
+                    </el-row>
+                </el-form-item>
+                <el-form-item label="显示结果">
+                    <el-input v-model="form.target"></el-input>
+                </el-form-item>
+            </el-form>
+        </el-col>
+    </el-row>
+</div>
+<script>
+    var app = new Vue(
+        {
+            el: '#app',
+            data() {
+                return {
+                    form: {
+                        source: '',
+                        target: '',
+                    },
+                };
+            },
+            methods: {
+		// https://www.cnblogs.com/zhangwei595806165/p/4537918.html
+                ip2Int(value) {
+                    let arr = value.split('.');
+                    return (Number(arr[0]) * 256 * 256 * 256 + Number(arr[1]) * 256 * 256 + Number(arr[2]) * 256 + Number(arr[3])) >>> 0;
+                },
+                int2Ip(value) {
+                    let arr = [];
+                    arr[0] = (value >>> 24) >>> 0;
+                    arr[1] = ((value << 8) >>> 24) >>> 0;
+                    arr[2] = (value << 16) >>> 24;
+                    arr[3] = (value << 24) >>> 24;
+                    return String(arr[0]) + "." + String(arr[1]) + "." + String(arr[2]) + "." + String(arr[3]);
+                },
+                processInt(form) {
+                    try {
+                        this.form.target = this.ip2Int(this.form.source);
+                    } catch (e) {
+                        alert(e);
+                    }
+                },
+                processIp(form) {
+                    try {
+                        this.form.target = this.int2Ip(this.form.source);
+                    } catch (e) {
+                        alert(e);
+                    }
+                },
+            }
+        }
+    )
+</script>
+</body>
+</html>
